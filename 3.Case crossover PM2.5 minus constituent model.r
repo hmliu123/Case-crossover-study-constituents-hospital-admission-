@@ -18,8 +18,13 @@ library("RcppRoll")
 library(forestploter)
 library(patchwork)
 
-#Import PM2.5 and its major constituents data in 292 cities
-b <- read.csv("Data/292_pol.csv")
+#Import data
+b <- read.csv("test_data_pol.csv") %>% 
+     mutate(date = as.Date(date))
+
+ckd_com <- import("test_data.csv") %>% 
+     mutate(date = as.Date(date))
+
 # Fuction for running model in each city
 city_RR <-  function(dataset,pollution_i){
   c <- as.character(pollution_i)
@@ -50,19 +55,18 @@ city_RR <-  function(dataset,pollution_i){
     
     #Generate case crossover dataset for each city
     data_case_crossover <- funccmake(sub$stratum,sub$PSN_NO,   
-                                     vars=cbind(temperature=sub$templa21, humidity = sub$humlag21, Holiday = sub$Holiday,
+                                     vars=cbind(temperature=sub$templag21, humidity = sub$humlag21, Holiday = sub$Holiday,
                                                 city_code = sub$city_code,
-                                                lag0 = sub[,lag0],lag1=sub[,lag1],lag2=sub[,lag2],lag3=sub[,lag3],lag4=sub[,lag4],lag5=sub[,lag5],lag6=sub[,lag6],lag7=sub[,lag7],
-                                                lag01=sub[,lag01],lag02=sub[,lag02],lag03=sub[,lag03],lag04=sub[,lag04],lag05=sub[,lag05],lag06=sub[,lag06],lag07=sub[,lag07],
+                                                lag01=sub[,lag01],
                                                 PM2.5lag01 = sub$PM2.5lag01))
     
     #Calculate PM2.5 minus constituents at lag01
-    data_case_crossover$other = data_case_crossover$PM2.5lag01-data_case_crossover[,paste0(pollution_i,"lag01")] 
+    data_case_crossover$other = data_case_crossover$PM2.5lag01-data_case_crossover[,paste0("lag01")] 
     #Empty tibble to store the results 
     final_result = tibble()
     lag_i <- "lag01"
 
-    data_case_crossover["analysis"] <- data_case_crossover[paste0(pollution_i,lag_i)]  
+    data_case_crossover["analysis"] <- data_case_crossover[paste0(lag_i)]  
     data_case_crossover["PM2.5"] <- data_case_crossover$PM2.5lag01  
     
       
@@ -144,30 +148,20 @@ meta <- function(dataset,pollution_i){
                             IQR = IQR_p
                             
     ))
-    final_result <- rbind(final_result,single_result)
+    final_result <- rbind(final_result,res)
   }
   
   return(final_result)
 }
 
 
-#Read the data and run the models
 
-subtype <- c("Asthma","LRI",
-             "Cardiac arrhythmias","CHD","Heart failure","Stroke",
-             "Depression","Schizophrenia","Parkinson's disease","CKD")
 pollution <- c("BC","OM","SO4","NO3","NH4","cl")
 
-#Loop for major diseases and constituents
-for (m in subtype){
+#Loop for constituents
+
   final_result = tibble()
   all_city_result  = tibble()
-  
-  cat(m,"")
-  
-  ckd_com <- read.csv(paste0("Analysis\\All disease\\",m,"_compont.csv")) %>% 
-    mutate(date = ymd(date),
-           city_code = as.numeric(city_code)) 
   
    #Run the loop
   for (pollution_i in pollution) { 
@@ -213,4 +207,4 @@ for (m in subtype){
                            final_result$percent_change_H)) %>% 
     distinct()
    
-}
+
