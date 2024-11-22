@@ -16,3 +16,4 @@ R Software, version 4.0.3
 1. Necessary packages are provided in the codes, please first install the packages.
 2. The shared codes are used to generate the main analysis of the paper, codes for drawing pictures are not shown.
 3. The codes are generated to estimate the risk and burden of one cause-specific hospital admission (LRI in the example data) associated with short-term exposure to PM2.5 and its major constituents. However, the same code can be used (by changing the data of other cause-specific hospital admissions) to develop the results for other outcomes (i.e., hospital admissions for CHD and CKD)
+4. "funccmake.R" is the source code used to generate case-crossover data frames.
