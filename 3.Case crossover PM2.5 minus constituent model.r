@@ -1,5 +1,5 @@
 ##########################################################################################################
-#Codes for "Associations of Improved Fine Particulate Air Pollution with Cause-specific Hospital Admissions"
+#Codes for "Reduced Fine Particulate Air Pollution and Cause-specific Hospital Admissions"
 #Authors for codes: Huimeng Liu, Jian Lei, Yunxing Jiang, Lijun Bai et.al.
 #Correspondence to Shaowei Wu, Yuewei Liu.
 ###########################################################################################################
@@ -14,7 +14,7 @@ library(lubridate)
 library(splines) 
 library(survival)
 library(metafor)
-library("RcppRoll")
+library(RcppRoll)
 library(forestploter)
 library(patchwork)
 

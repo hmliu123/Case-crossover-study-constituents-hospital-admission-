@@ -1,11 +1,11 @@
 ##########################################################################################################
-#Codes for "Associations of Improved Fine Particulate Air Pollution with Cause-specific Hospital Admissions"
+#Codes for "Reduced Fine Particulate Air Pollution and Cause-specific Hospital Admissions"
 #Authors for codes: Huimeng Liu, Jian Lei, Yunxing Jiang, Lijun Bai et.al.
 #Correspondence to Shaowei Wu, Yuewei Liu.
 ###########################################################################################################
 
 ##########################################################################################################
-# Case cross-over analysis for single-constituent model (Figure 2 and Figure S2)
+# Case cross-over analysis for single-constituent model (Figure S3)
 ###########################################################################################################
 
 rm(list=ls())
@@ -15,7 +15,7 @@ library(lubridate)
 library(splines) 
 library(survival)
 library(metafor)
-library("RcppRoll")
+library(RcppRoll)
 library(forestploter)
 library(patchwork)
 

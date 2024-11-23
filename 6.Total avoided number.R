@@ -1,13 +1,13 @@
 ##########################################################################################################
-#Codes for "Associations of Improved Fine Particulate Air Pollution with Cause-specific Hospital Admissions"
+#Codes for "Reduced Fine Particulate Air Pollution and Cause-specific Hospital Admissions"
 #Authors for codes: Huimeng Liu, Jian Lei, Yunxing Jiang, Lijun Bai et.al.
 #Correspondence to Shaowei Wu, Yuewei Liu.
 ###########################################################################################################
 
 
 ####################################################################################################################################################
-#Total avoided numbers of cause-specific hospital admissions attributable to the annual absolute declining rates (μg/m3 per year) of PM2.5 and 
-#black carbon in 292 Chinese cities of prefecture-level or above during 2013-2017
+#Total avoided numbers of cause-specific hospital admissions attributable to cummulative reductions of PM2.5 and 
+#black carbon during 2014-2017 compared with 2013. 
 ##################################################################################################################################################
 rm(list = ls())
 
@@ -20,8 +20,8 @@ final <- NULL
 
 
 #######################################################################################
-#Total avoided numbers attributable to the 
-#annual absolute declining rates (μg/m3 per year) of PM2.5 and black carbon
+#Total avoided numbers attributable to the cummulative reductions in PM2.5 and black carbon
+#（cummulative reductions were estimated byu annual absolute declining rates (μg/m3 per year) 
 #############################################################################################
 
 pollution_i <- c("PM2.5lag01")
