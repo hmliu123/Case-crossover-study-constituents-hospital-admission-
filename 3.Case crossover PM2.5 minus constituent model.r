@@ -50,7 +50,7 @@ city_RR <-  function(dataset,pollution_i){
     sub$dow    <- as.factor(weekdays(sub$date))
     sub$stratum <- as.factor(sub$year:sub$month:sub$dow)
     #Temperature and relative humidity at lag 0-21
-    sub$templag21 = roll_mean(sub$meantem/10, n = 22, align = "right", fill = NA)
+    sub$templag21 = roll_mean(sub$meantem, n = 22, align = "right", fill = NA)
     sub$humlag21 = roll_mean(sub$rh, n = 22, align = "right", fill = NA)
     
     #Generate case crossover dataset for each city
