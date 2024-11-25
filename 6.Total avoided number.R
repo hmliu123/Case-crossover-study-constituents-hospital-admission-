@@ -12,10 +12,7 @@
 rm(list = ls())
 
 library(rio)
-library(grid)
 library(tidyverse)
-library(ggsci)
-library(scales)
 final <- NULL
 
 

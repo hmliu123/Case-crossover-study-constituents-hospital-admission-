@@ -1,10 +1,10 @@
 ##########################################################################################################
-#Codes for "Associations of reduced Fine Particulate Air Pollution with Cause-specific Hospital Admissions"
+#Codes for "Reduced Fine Particulate Air Pollution and Cause-specific Hospital Admissions"
 #Authors for codes: Huimeng Liu, Jian Lei, Yunxing Jiang, Lijun Bai et.al.
 #Correspondence to Shaowei Wu, Yuewei Liu.
 ###########################################################################################################
 library(wql)
-####################Mann-Kendall trend test for pollution concentration in 292 cities######################
+####################Mann-Kendall trend test for pollution concentration (Figure S1)######################
 
 pollution <- c("PM2.5","BC","OM","SO4","NO3","NH4","cl")
 test_res <- tibble()

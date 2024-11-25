@@ -12,18 +12,9 @@ rm(list=ls())
 
 library(tidyverse)
 library(lubridate)
-library(skimr) 
-library(janitor) 
 library(rio)
-library(dlnm)
-library(mvmeta) 
-library(splines) 
-library(survival)
-library(metafor)
-library(RcppRoll)
-library(ggplot2)
-library(scales)
-library(ggsci) 
+
+
 
 #Import pollution data
 a <- read.csv("test_data_pol.csv")

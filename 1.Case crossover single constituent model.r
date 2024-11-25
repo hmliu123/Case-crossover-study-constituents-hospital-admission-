@@ -16,8 +16,8 @@ library(splines)
 library(survival)
 library(metafor)
 library(RcppRoll)
-library(forestploter)
-library(patchwork)
+library(rio)
+
 
 #Import data
 ckd_com <- import("test_data.csv") %>% 
