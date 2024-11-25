@@ -1,5 +1,5 @@
 ##########################################################################################################
-#Codes for "Reduced Fine Particulate Air Pollution and Cause-specific Hospital Admissions"
+#Codes for "Cause-Specific Hospital Admissions Attributable to Reduced Fine Particulate Air Pollution"
 #Authors for codes: Huimeng Liu, Jian Lei, Yunxing Jiang, Lijun Bai et.al.
 #Correspondence to Shaowei Wu, Yuewei Liu.
 ###########################################################################################################
