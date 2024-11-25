@@ -1,4 +1,4 @@
-# Example Codes for "Reduced Fine Particulate Air Pollution and Cause-specific Hospital Admissions "
+# Example Codes for "Cause-Specific Hospital Admissions Attributable to Reduced Fine Particulate Air Pollution"
 ## Overview
 Example codes and test data for the main analysis of the paper "Reduced Fine Particulate Air Pollution and Cause-specific Hospital Admissions"
 Note: The health insurance data analyzed in this study are regulated by governmental policies and cannot be made available to the public due to privacy reasons. Thus, we generate a fake dataset as  an example, the results are not consistent with the main findings of the paper.
