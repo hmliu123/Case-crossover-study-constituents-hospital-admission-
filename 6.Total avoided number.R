@@ -7,7 +7,7 @@
 
 ####################################################################################################################################################
 #Total avoided numbers of cause-specific hospital admissions attributable to cummulative reductions of PM2.5 and 
-#black carbon during 2014-2017 compared with 2013. 
+#black carbon during 2014-2017 compared with 2013. (Figure 4)
 ##################################################################################################################################################
 rm(list = ls())
 
@@ -16,7 +16,7 @@ library(tidyverse)
 final <- NULL
 
 
-#######################################################################################
+################################################################################################33
 #Total avoided numbers attributable to the cummulative reductions in PM2.5 and black carbon
 #（cummulative reductions were estimated byu annual absolute declining rates (μg/m3 per year) 
 #############################################################################################

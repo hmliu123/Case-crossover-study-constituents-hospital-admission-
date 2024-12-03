@@ -4,7 +4,7 @@
 #Correspondence to Shaowei Wu, Yuewei Liu.
 ###########################################################################################################
 library(wql)
-####################Mann-Kendall trend test for pollution concentration (Figure S1)######################
+####################Mann-Kendall trend test for pollution concentration (Figure 1, Table 2)######################
 
 pollution <- c("PM2.5","BC","OM","SO4","NO3","NH4","cl")
 test_res <- tibble()

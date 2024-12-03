@@ -6,7 +6,7 @@
 
 
 ####################################################################################################################################################
-#Annual and total attributable fractions for hospital admissions (Table 2, Figure 2, Figure 3, Table S4, Table S5)
+#Annual and total attributable fractions for hospital admissions (Table 2, Figure 2, Figure 3, Supplementary Tbale 10-11)
 ##################################################################################################################################################
 rm(list=ls())
 
