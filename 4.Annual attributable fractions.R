@@ -1,12 +1,12 @@
 ##########################################################################################################
-#Codes for "Cause-Specific Hospital Admissions Attributable to Reduced Fine Particulate Air Pollution"
-#Authors for codes: Huimeng Liu, Jian Lei, Yunxing Jiang, Lijun Bai et.al.
+#Codes for "Hospital admissions attributable to reduced air pollution due to clean-air policies in China"
+#Authors for codes: Huimeng Liu, Jian Lei, Yunxing Jiang, Lijun Bai, et.al.
 #Correspondence to Shaowei Wu, Yuewei Liu.
 ###########################################################################################################
 
 
 ####################################################################################################################################################
-#Annual and total attributable fractions for hospital admissions (Table 2, Figure 2, Figure 3, Supplementary Tbale 10-11)
+#Annual and total attributable fractions for hospital admissions (Table 2, Figure 2, Figure 4, Supplementary Tables 10-13)
 ##################################################################################################################################################
 rm(list=ls())
 
@@ -21,7 +21,7 @@ a <- read.csv("test_data_pol.csv")
 a <- a %>% 
   mutate(date=ymd(date))
  
-#Import exposure-response relationships obtained form single constituent model
+#Import exposure-response relationships obtained form single-constituent model
 meta_relag <- read_csv("Result\\single_pol_test.csv") 
 rr <- as.data.frame(meta_relag, stringsAsFactors = F)
 #Generate empty list to store the results
@@ -29,7 +29,7 @@ temp_vars <- c("RR", "RR_L", "RR_H")
 rr[temp_vars] <- sapply(rr[temp_vars], as.numeric)
 re_HAN <- NULL
 
-pollution_i <- c("PM2.5lag01") #PM2.5lag01 BClag01 
+pollution_i <- c("PM2.5lag01") # BClag01 
 #Import health data
 dataset = import("test_data.csv") %>% 
      mutate(date = as.Date(date))
@@ -56,7 +56,7 @@ for (city_code_i in city_list) {
           sum_add <- aggregate(sub$PSN_NO, list(format(sub$date, "%Y")), FUN=sum, na.rm=T) %>% 
                rename(PSN_NO = x)
           
-          #Filter effect esitmations of each constituent and cause-specific hospital admissions based on single constituent model
+          #Filter effect esitmations of each constituent and cause-specific hospital admission based on single-constituent model
           rr_use <- subset(rr,  pollution == pollution_i )
           sub["pol"] <- sub[,pollution_i]
 
@@ -79,18 +79,18 @@ for (city_code_i in city_list) {
      }
      
      
-     #Annual attributable numbers for each cause-specific hospital admissions of the included cities
+     #Annual attributable numbers for each cause-specific hospital admission in the included cities
      af_all <- ann_final %>% 
           group_by(`Group.1`) %>% 
           summarise(AN = sum(AN,na.rm = T),PSN_NO = sum(PSN_NO,na.rm=T),
                     AN_L = sum(AN_L,na.rm = T),AN_H = sum(AN_H,na.rm = T))
     
-    #Annual attributable fractions for each cause-specific hospital admissions of the included cities
+    #Annual attributable fractions for each cause-specific hospital admission in the included cities
      af_all <- af_all %>% 
           mutate(AF = (AN/PSN_NO)*100,
                  AF_L = (AN_L/PSN_NO)*100,
                  AF_H = (AN_H/PSN_NO)*100)
-     #Total attributable fractions for each cause-specific hospital admissions of the included cities
+     #Total attributable fractions for each cause-specific hospital admission in the included cities
       ann_final <- ann_final %>% 
           mutate(AF = (AN/PSN_NO)*100,
                  AF_L = (AN_L/PSN_NO)*100,

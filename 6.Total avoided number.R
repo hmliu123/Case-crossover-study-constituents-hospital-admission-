@@ -1,13 +1,13 @@
 ##########################################################################################################
-#Codes for "Cause-Specific Hospital Admissions Attributable to Reduced Fine Particulate Air Pollution"
-#Authors for codes: Huimeng Liu, Jian Lei, Yunxing Jiang, Lijun Bai et.al.
+#Codes for "Hospital admissions attributable to reduced air pollution due to clean-air policies in China"
+#Authors for codes: Huimeng Liu, Jian Lei, Yunxing Jiang, Lijun Bai, et.al.
 #Correspondence to Shaowei Wu, Yuewei Liu.
 ###########################################################################################################
 
 
 ####################################################################################################################################################
-#Total avoided numbers of cause-specific hospital admissions attributable to cummulative reductions of PM2.5 and 
-#black carbon during 2014-2017 compared with 2013. (Figure 4)
+#Total avoided numbers of cause-specific hospital admissions attributable to cumulative reductions of PM2.5 and 
+#black carbon during 2014-2017 compared with 2013. (Figure 3)
 ##################################################################################################################################################
 rm(list = ls())
 
@@ -16,9 +16,9 @@ library(tidyverse)
 final <- NULL
 
 
-################################################################################################33
-#Total avoided numbers attributable to the cummulative reductions in PM2.5 and black carbon
-#（cummulative reductions were estimated byu annual absolute declining rates (μg/m3 per year) 
+################################################################################################
+#Total avoided numbers attributable to cumulative reductions in PM2.5 and black carbon
+#（cumulative reductions were estimated according to annual absolute declining rates (μg/m3 per year) 
 #############################################################################################
 
 pollution_i <- c("PM2.5lag01")

@@ -1,11 +1,11 @@
 ##########################################################################################################
-#Codes for "Cause-Specific Hospital Admissions Attributable to Reduced Fine Particulate Air Pollution"
-#Authors for codes: Huimeng Liu, Jian Lei, Yunxing Jiang, Lijun Bai et.al.
+#Codes for "Hospital admissions attributable to reduced air pollution due to clean-air policies in China"
+#Authors for codes: Huimeng Liu, Jian Lei, Yunxing Jiang, Lijun Bai, et.al.
 #Correspondence to Shaowei Wu, Yuewei Liu.
 ###########################################################################################################
 
 ##########################################################################################################
-# Case cross-over analysis for PM2.5 minus constituents model (Supplementary Tbale 4)
+# Case-crossover analysis for PM2.5 minus constituent model (Supplementary Table 5)
 ###########################################################################################################
 rm(list=ls())
 library(dplyr)
@@ -41,7 +41,7 @@ city_RR <-  function(dataset,pollution_i){
     # LOAD
     sub <- data[[i]]
     ################################################################
-    #Function that can transform data into case crossover dataset 
+    #Function that can transform data into case-crossover dataset 
     source("funccmake.R")
     Sys.setlocale("LC_TIME", "English")
     #Generate time stratum
@@ -53,14 +53,14 @@ city_RR <-  function(dataset,pollution_i){
     sub$templag21 = roll_mean(sub$meantem, n = 22, align = "right", fill = NA)
     sub$humlag21 = roll_mean(sub$rh, n = 22, align = "right", fill = NA)
     
-    #Generate case crossover dataset for each city
+    #Generate case-crossover dataset for each city
     data_case_crossover <- funccmake(sub$stratum,sub$PSN_NO,   
                                      vars=cbind(temperature=sub$templag21, humidity = sub$humlag21, Holiday = sub$Holiday,
                                                 city_code = sub$city_code,
                                                 lag01=sub[,lag01],
                                                 PM2.5lag01 = sub$PM2.5lag01))
     
-    #Calculate PM2.5 minus constituents at lag01
+    #Calculate PM2.5 minus constituent at lag01
     data_case_crossover$other = data_case_crossover$PM2.5lag01-data_case_crossover[,paste0("lag01")] 
     #Empty tibble to store the results 
     final_result = tibble()
@@ -75,8 +75,8 @@ city_RR <-  function(dataset,pollution_i){
       
       timeout <- as.numeric(factor(data_case_crossover$stratum))
       timein <- timeout-0.1
-      model_clr <- coxph(Surv(timein,timeout,status) ~ analysis + other+PM2.5+ ns(temperature, df=6) + ns(humidity, df=3) + as.factor(Holiday), 
-                         weights=weights, data_case_crossover)
+      model_clr <- coxph(Surv(timein,timeout,status) ~ analysis + other_lag01+ ns(temperature, df=6) + ns(humidity, df=3) + as.factor(Holiday), 
+                       weights=weights, data_case_crossover)
       #Extract results
       x <- summary(model_clr)
       beta<-signif(x$coef[1], digits=5)
@@ -105,7 +105,7 @@ city_RR <-  function(dataset,pollution_i){
 #####################################################################################
 #Fuction for random-effects model
 meta <- function(dataset,pollution_i){
-  #Filter city-specific estimations for each constituents
+  #Filter city-specific estimations for each constituent
   temp1 <- dataset %>% 
     filter(pollution == pollution_i)
   #Use lag01 as the main time window
@@ -121,7 +121,7 @@ meta <- function(dataset,pollution_i){
     sub <- temp[[lag_indicator_i]]
     IQR_p <- quantile(b[,paste0(pollution_i)], 0.75,na.rm = T) - 
       quantile(b[,paste0(pollution_i)], 0.25,na.rm = T)
-    #Random effects model
+    #Random-effects model
     summary <- summary(rma(yi = beta,
                            sei = se,
                            data = sub,
@@ -165,7 +165,7 @@ pollution <- c("BC","OM","SO4","NO3","NH4","cl")
   
    #Run the loop
   for (pollution_i in pollution) { 
-  #City number in each cause-specific hospital admissions
+  #City number in each cause-specific hospital admission
     regions <- unique(ckd_com$district)
   
   #Arrange the data as a list of data sets  
@@ -180,7 +180,7 @@ pollution <- c("BC","OM","SO4","NO3","NH4","cl")
     temp_city <- city_RR(ckd_com,pollution_i)
     #Bind city-specific results into one file 
     all_city_result <- rbind(all_city_result,temp_city)
-    #Randome effects model to pool the results for each constituents
+    #Randome-effects model to pool the results for each constituent
     temp <- meta(all_city_result,pollution_i)
     #Bind results of all constituents
     final_result <- rbind(final_result,temp)

@@ -1,11 +1,11 @@
 ##########################################################################################################
-#Codes for "Cause-Specific Hospital Admissions Attributable to Reduced Fine Particulate Air Pollution"
-#Authors for codes: Huimeng Liu, Jian Lei, Yunxing Jiang, Lijun Bai et.al.
+#Codes for "Hospital admissions attributable to reduced air pollution due to clean-air policies in China"
+#Authors for codes: Huimeng Liu, Jian Lei, Yunxing Jiang, Lijun Bai, et.al.
 #Correspondence to Shaowei Wu, Yuewei Liu.
 ###########################################################################################################
 
 ##########################################################################################################
-# Case cross-over analysis for single-constituent model (Supplementary Tbale 1-2)
+# Case cross-over analysis for single-constituent model (Supplementary Tables 2-3)
 ###########################################################################################################
 
 rm(list=ls())
@@ -38,7 +38,7 @@ city_RR <-  function(dataset,pollution_i){
     # Load city data
     sub <- data[[i]]
     ################################################################
-    #Function that can transform data into case crossover dataset 
+    #Function that can transform data into case-crossover dataset 
     source("funccmake.R")
     Sys.setlocale("LC_TIME", "English")
     #Generate time stratum
@@ -97,7 +97,7 @@ city_RR <-  function(dataset,pollution_i){
 
 
 #####################################################################################
-#Fuction for random-effects model of each constituents
+#Fuction for random-effects model of each constituent
 
 meta <- function(dataset,pollution_i){
   #Filter city-specific estimations for each constituents
@@ -203,6 +203,6 @@ pollution <- c("PM2.5","BC","OM","SO4","NO3","NH4","cl")
   
   #Output the data-Overall percent changes with 95% confidence intervals 
   #in risks of cause-specific hospital admissions associated with
-  #1μg/m3 increase in ambient PM2.5 and its major constituents at lag01
+  #1 μg/m3 increase in ambient PM2.5 and its major constituents at lag01
   write.csv(final_result,"Result\\single_pol.csv")
 

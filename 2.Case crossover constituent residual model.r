@@ -1,11 +1,11 @@
 ##########################################################################################################
-#Codes for "Cause-Specific Hospital Admissions Attributable to Reduced Fine Particulate Air Pollution"
-#Authors for codes: Huimeng Liu, Jian Lei, Yunxing Jiang, Lijun Bai et.al.
+#Codes for "Hospital admissions attributable to reduced air pollution due to clean-air policies in China"
+#Authors for codes: Huimeng Liu, Jian Lei, Yunxing Jiang, Lijun Bai, et.al.
 #Correspondence to Shaowei Wu, Yuewei Liu.
 ###########################################################################################################
 
 ##########################################################################################################
-# Case cross-over analysis for constituent residual model (Supplementary Tbale 3)
+# Case-crossover analysis for constituent residual model (Supplementary Table 4)
 ###########################################################################################################
 
 rm(list=ls())
@@ -26,7 +26,7 @@ ckd_com <- import("test_data.csv") %>%
      mutate(date = as.Date(date))
 
 ckd_com <- left_join(ckd_com,b,by = c("city_code","date","district"))
-#Calculate residuals for 292 cities to further obtain IQR of constituents residuals
+#Calculate residuals for 292 cities to further obtain IQR of constituent residuals
 pollution <- c("BC","OM","SO4","NO3","NH4","cl")
 city <- unique(b$district)
 final <- tibble()
@@ -34,7 +34,7 @@ for (i in city){
   sub <- b %>% 
     filter(district == i)
   
-  #PM2.5 and its constituents concentration at lag01 time window 
+  # Concentrations of PM2.5 and its constituents at lag01 time window 
   sub$PM2.5lag01 = roll_mean(sub$PM2.5, n = 2, align = "right", fill = NA)
   sub$BClag01 = roll_mean(sub$BC, n = 2, align = "right", fill = NA)
   sub$OMlag01 = roll_mean(sub$OM, n = 2, align = "right", fill = NA)
@@ -49,7 +49,7 @@ for (i in city){
     #Linear model for PM2.5 and constituents
     lin_reg <- lm(unlist(sub[,pollution_i])~unlist(sub[,x]),na.action = na.exclude)
     
-    #Constituent-residual
+    #Constituent residual
     sub[,paste0(pollution_i,"res")] <- resid(lin_reg)
     sub[,paste0(pollution_i,"reslag01")] <- roll_mean(sub[,paste0(pollution_i,"res")], n = 2, align = "right", fill = NA)
     
@@ -76,10 +76,10 @@ city_RR <-  function(dataset,pollution_i){
     ################################################################
     lag_indicator <- "lag01"
     
-    #Generate constituents residual at main time window
+    #Generate constituent residuals at main time window
     for (lag_i in lag_indicator){
       x <- paste0("PM2.5")
-      #Linear regression model for PM2.5 and constituents
+      #Linear regression model for PM2.5 and its constituents
       lin_reg <- lm(unlist(sub[,paste0(pollution_i)])~unlist(sub[,x]),na.action = na.exclude)
       #Constituent residual
       sub[,paste0(pollution_i,"res")] <- resid(lin_reg)
@@ -87,7 +87,7 @@ city_RR <-  function(dataset,pollution_i){
       sub[,paste0(pollution_i,"lag01res")] <- roll_mean(unlist(sub[,paste0(pollution_i,"res")]), n = 2, align = "right", fill = NA)
       
     }
-    #Function that can transform data into case crossover dataset 
+    #Function that can transform data into case-crossover dataset 
     source("funccmake.R")
     Sys.setlocale("LC_TIME", "English")
     #Generate time stratum
@@ -98,7 +98,7 @@ city_RR <-  function(dataset,pollution_i){
     #Temperature and relative humidity at lag 0-21
     sub$templag21 = roll_mean(sub$meantem, n = 22, align = "right", fill = NA)
     sub$humlag21 = roll_mean(sub$rh, n = 22, align = "right", fill = NA)
-    #Generate case crossover dataset for each city
+    #Generate case-crossover dataset for each city
     data_case_crossover <- funccmake(sub$stratum,sub$PSN_NO,   
                                      vars=cbind(temperature=sub$templag21, humidity = sub$humlag21, Holiday = sub$Holiday,
                                                 city_code = sub$city_code,PM2.5lag01 = sub$PM2.5lag01,PM2.5lag0 = sub$PM2.5lag0,
@@ -146,9 +146,9 @@ city_RR <-  function(dataset,pollution_i){
 }
 
 #####################################################################################
-#Fuction for random-effects model of each constituents
+#Fuction for random-effects model of each constituent
 meta <- function(dataset,pollution_i){
- #Filter city-specific estimations for each constituents
+ #Filter city-specific estimations for each constituent
   temp1 <- dataset %>% 
     filter(pollution == pollution_i)
  #Use lag01 as the main time window
@@ -162,7 +162,7 @@ meta <- function(dataset,pollution_i){
     
     # Load
     sub <- temp[[lag_indicator_i]]
-    #Calculate IQR for residuals
+    #Calculate IQR for constituent residuals
     IQR_p <- quantile(final[,paste0(pollution_i,"res")], 0.75,na.rm = T) -
       quantile(final[,paste0(pollution_i,"res")], 0.25,na.rm = T) 
     
@@ -202,12 +202,12 @@ meta <- function(dataset,pollution_i){
 
 pollution <- c("BC","OM","SO4","NO3","NH4","cl")
 
-#Loop forconstituents
+#Loop for constituents
   final_result = tibble()
  
   #Run the loop
   for (pollution_i in pollution) { 
-    #City number in each cause-specific hospital admissions  
+    #City number in each cause-specific hospital admission  
     regions <- unique(ckd_com$district)
     #Arrange the data as a list of data sets
     data <- lapply(regions,function(x) ckd_com[ckd_com$district==x,])
@@ -217,9 +217,9 @@ pollution <- c("BC","OM","SO4","NO3","NH4","cl")
     model_re <- vector("list",length(data))
     names(model_re) <- regions
     
-    #city-specific results for each constituents
+    #city-specific results for each constituent
     all_city_result <- city_RR(ckd_com,pollution_i)
-    #Randome effects model to pool the results for each constituents
+    #Random-effects model to pool the results for each constituent
     temp <- meta(all_city_result,pollution_i)
     #Bind results of all constituents
     final_result <- rbind(final_result,temp)
