@@ -1,6 +1,6 @@
 # Example Codes for "Hospital admissions attributable to reduced air pollution due to clean-air policies in China"
 ## Overview
-Example codes and test data for the main analysis of the paper "Hospital admissions attributable to reduced air pollution due to clean-air policies in China"
+Example codes and test data for the main analysis of the paper "Hospital admissions attributable to reduced air pollution due to clean-air policies in China (DOI:10.1038/s41591-025-03515-y)"
 Note: The health insurance data analyzed in this study are regulated by governmental policies and cannot be made available to the public due to privacy reasons. Thus, we generate a fake dataset as  an example, the results are not consistent with the main findings of the paper.
 
 ## Software details
